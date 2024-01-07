@@ -41,7 +41,7 @@ const App = () => {
   const mostPoints = Math.max(...points);
   const topAnecdote = anecdotes[points.indexOf(mostPoints)]
 
-  const handleClick = (max) => {
+  const handleClick = () => {
     const amount = Math.floor(Math.random() * anecdotes.length);
     setSelected(amount); 
   }
