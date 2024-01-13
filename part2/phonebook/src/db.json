@@ -1,24 +1,69 @@
 {
-    "persons":[
-      { 
-        "name": "Arto Hellas", 
-        "number": "040-123456",
-        "id": 1
-      },
-      { 
-        "name": "Ada Lovelace", 
-        "number": "39-44-5323523",
-        "id": 2
-      },
-      { 
-        "name": "Dan Abramov", 
-        "number": "12-43-234345",
-        "id": 3
-      },
-      { 
-        "name": "Mary Poppendieck", 
-        "number": "39-23-6423122",
-        "id": 4
-      }
-    ]
-  }
+  "persons": [
+    {
+      "name": "Arto Hellas",
+      "number": "040-123456",
+      "id": "1"
+    },
+    {
+      "name": "Ada Lovelace",
+      "number": "39-44-5323523",
+      "id": "2"
+    },
+    {
+      "name": "Dan Abramov",
+      "number": "12-43-234345",
+      "id": "3"
+    },
+    {
+      "name": "Mary Poppendieck",
+      "number": "39-23-6423122",
+      "id": "4"
+    },
+    {
+      "id": "dfc9",
+      "name": "asdf",
+      "number": "fda"
+    },
+    {
+      "id": "fc0f",
+      "name": "another",
+      "number": "aergfiuh"
+    },
+    {
+      "id": "2cbe",
+      "name": "oinwerf",
+      "number": "fewkjf"
+    },
+    {
+      "id": "94e6",
+      "name": "remove name?",
+      "number": "234974"
+    },
+    {
+      "id": "2e5d",
+      "name": "atyy",
+      "number": "wouhg"
+    },
+    {
+      "id": "a335",
+      "name": "again",
+      "number": "again"
+    },
+    {
+      "id": "f0cd",
+      "name": "removing?",
+      "number": "???"
+    },
+    {
+      "id": "bcd4",
+      "name": "",
+      "number": "possibly?"
+    },
+    {
+      "id": "e92e",
+      "name": "fwef",
+      "number": "asdfdf"
+    }
+  ]
+}

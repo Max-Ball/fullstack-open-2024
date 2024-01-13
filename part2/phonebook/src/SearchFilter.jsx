@@ -8,13 +8,11 @@ const SearchFilter = ({persons}) => {
     const handleFilter = (event) => {
         setCheckFilter(event.target.value)
 
-        if(event.target.value.trim() ===''){
+        if(event.target.value.trim() === ''){
             setFilteredPersons([]);
             return;
         }
         const filteredPerson = persons.filter(p => p.name.toLowerCase().includes(event.target.value.toLowerCase()))
-
-        console.log(filteredPerson);
         setFilteredPersons(filteredPerson)
     }
     return (

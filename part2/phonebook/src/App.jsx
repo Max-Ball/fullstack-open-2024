@@ -3,6 +3,7 @@ import Person from './Person'
 import PersonForm from './PersonForm'
 import SearchFilter from './SearchFilter'
 import axios from 'axios'
+import personService from './services/persons'
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -12,18 +13,16 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
 
   const hook = () => {
-    axios.get('http://localhost:3001/persons')
-    .then((response) => {
-      console.log(response.data);
-      setPersons(response.data)
+    personService.getAll()
+    .then(allPersons => {
+      setPersons(allPersons)
     })
   }
 
   useEffect(hook, [])
 
-  const submitNewPerson = (event) => {
+  const submitNewPerson = async (event) => {
     event.preventDefault();
-
     const personObj = {
       name: newName,
       number: newNumber
@@ -32,12 +31,19 @@ const App = () => {
     const existingEntry = persons.find(p => p.name === newName)
 
     if(!existingEntry) {
-      setPersons(persons.concat(personObj))
-      setNewName('');
+      try {
+        const newPerson = await personService.create(personObj)
+        setPersons(persons.concat(newPerson))
+        setNewName('');
+        setNewNumber('');
+      } catch (error) {
+        console.log(error, 'error creating entry');
+      }
     } else {
       alert(`${newName} is already in the phone book`)
     }
   }
+  
 
   const handleNameChange = (event) => {
     setNewName(event.target.value)
