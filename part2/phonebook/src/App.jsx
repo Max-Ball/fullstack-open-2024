@@ -44,7 +44,19 @@ const App = () => {
     }
   }
   
-
+  const deletePerson = async (person) => {
+    try {
+      if(!window.confirm(`Are you sure you want to delete ${person.name}?`))
+      {
+        return
+      } else {
+        await personService.deletePerson(person.id)
+        setPersons(persons.filter(p => p.id !== person.id))
+      }
+    } catch (error) {
+      console.log(error, 'error deleting person');
+    }
+  }
   const handleNameChange = (event) => {
     setNewName(event.target.value)
   }
@@ -65,7 +77,7 @@ const App = () => {
       />
       <h2>Contacts</h2>
       {persons.map(person => 
-          <Person person={person} key={person.name} />
+          <Person person={person} key={person.name} deletePerson={() => deletePerson(person)} />
         )}
     </div>
   )
