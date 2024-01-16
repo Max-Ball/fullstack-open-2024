@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import Person from './Person'
 import PersonForm from './PersonForm'
 import SearchFilter from './SearchFilter'
-import axios from 'axios'
 import personService from './services/persons'
 
 const App = () => {
@@ -40,10 +39,23 @@ const App = () => {
         console.log(error, 'error creating entry');
       }
     } else {
-      alert(`${newName} is already in the phone book`)
+      checkUpdate(newPerson);
     }
   }
-  
+  const checkUpdate = async (personObj) => {
+    try {
+      const confirm = window.confirm(`${newName} is already in the phone book. Do you want to update their number?`)
+    if(!confirm) {
+      return
+    } else {
+      console.log(personObj);
+      const updatedNumber = await personService.update(personObj.number)
+      setNewNumber(updatedNumber)
+    }
+    } catch (error) {
+      console.log(`error updating ${newName}'s number`);
+    }
+  }
   const deletePerson = async (person) => {
     try {
       if(!window.confirm(`Are you sure you want to delete ${person.name}?`))
@@ -57,6 +69,7 @@ const App = () => {
       console.log(error, 'error deleting person');
     }
   }
+
   const handleNameChange = (event) => {
     setNewName(event.target.value)
   }
