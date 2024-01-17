@@ -39,17 +39,18 @@ const App = () => {
         console.log(error, 'error creating entry');
       }
     } else {
-      checkUpdate(newPerson);
+      await checkUpdate(existingEntry);
     }
   }
-  const checkUpdate = async (personObj) => {
+  const checkUpdate = async (existingEntry) => {
     try {
+      console.log(existingEntry);
       const confirm = window.confirm(`${newName} is already in the phone book. Do you want to update their number?`)
     if(!confirm) {
       return
     } else {
-      console.log(personObj);
-      const updatedNumber = await personService.update(personObj.number)
+      existingEntry.number = newNumber
+      const updatedNumber = await personService.update(existingEntry.id, existingEntry)
       setNewNumber(updatedNumber)
     }
     } catch (error) {
