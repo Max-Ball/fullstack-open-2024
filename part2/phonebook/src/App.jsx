@@ -3,18 +3,33 @@ import Person from './Person'
 import PersonForm from './PersonForm'
 import SearchFilter from './SearchFilter'
 import personService from './services/persons'
+import Notification from './Notification'
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas' }
-  ]) 
+  const [persons, setPersons] = useState([]) 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
+  const [message, setMessage] = useState('')
+
+  const messageStyle = {
+    background: 'lightgrey',
+    fontSize: '20px',
+    borderStyle: 'solid',
+    borderRadius: '5px',
+    padding: '10px',
+    marginBottom: '10px'
+  }
 
   const hook = () => {
     personService.getAll()
     .then(allPersons => {
       setPersons(allPersons)
+    })
+    .catch((error) => {
+      setMessage(error.message)
+        setTimeout(() => {
+          setMessage(null)
+        }, 4000)
     })
   }
 
@@ -35,8 +50,12 @@ const App = () => {
         setPersons(persons.concat(newPerson))
         setNewName('');
         setNewNumber('');
+        setMessage(`${newPerson.name} has been added`)
       } catch (error) {
-        console.log(error, 'error creating entry');
+        setMessage(error.message)
+        setTimeout(() => {
+          setMessage(null)
+        }, 1000)
       }
     } else {
       await checkUpdate(existingEntry);
@@ -51,9 +70,15 @@ const App = () => {
       existingEntry.number = newNumber
       const updatedNumber = await personService.update(existingEntry.id, existingEntry)
       setNewNumber(updatedNumber)
+      setNewName('');
+      setNewNumber('');
+      setMessage(`${existingEntry.name}'s contact has been updated to ${newNumber}`)
     }
     } catch (error) {
-      console.log(`error updating ${newName}'s number`);
+      setMessage(error.message)
+        setTimeout(() => {
+          setMessage(null)
+        }, 1000)
     }
   }
   const deletePerson = async (person) => {
@@ -66,20 +91,22 @@ const App = () => {
         setPersons(persons.filter(p => p.id !== person.id))
       }
     } catch (error) {
-      console.log(error, 'error deleting person');
+      setMessage(`${person.name} has already been deleted`)
+        setTimeout(() => {
+          setMessage(null)
+        }, 4000)
     }
   }
-
   const handleNameChange = (event) => {
     setNewName(event.target.value)
   }
-  
   const handleNumberChange = (event) => {
     setNewNumber(event.target.value)
   }
 
   return (
     <div>
+      <Notification messageStyle={messageStyle} message={message} />
       <h2>Phonebook</h2>
       <SearchFilter persons={persons} />
       <h2>Add a contact</h2>
