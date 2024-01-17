@@ -44,7 +44,6 @@ const App = () => {
   }
   const checkUpdate = async (existingEntry) => {
     try {
-      console.log(existingEntry);
       const confirm = window.confirm(`${newName} is already in the phone book. Do you want to update their number?`)
     if(!confirm) {
       return
